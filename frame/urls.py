@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from images.views import ImageUploaderView
 from images.views import ImageView
+from logentries_logging.views import LogsView
 
 urlpatterns = patterns('',
     # Examples:
@@ -12,5 +13,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^upload/$', ImageUploaderView.as_view()),
+    url(r'^logs/$', LogsView.as_view()),
     url(r'^(?P<image_identifier>[^/]+)/$', ImageView.as_view(), name='image')
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

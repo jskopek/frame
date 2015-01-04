@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django_coverage',
 
     'images',
+    'logentries_logging',
 )
 
 MIDDLEWARE_CLASSES = (
