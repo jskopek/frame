@@ -77,21 +77,24 @@ class S3Storage(LocalStorage):
         """
         Returns the S3_BUCKET. Checks local environment variables first, database-stored settings second
         """
-        return os.environ.get('S3_BUCKET', self.database_settings.bucket)
+        bucket = os.environ.get('S3_BUCKET')
+        return bucket or self.database_settings.bucket
 
     @property
     def S3_ACCESS_KEY(self):
         """
         Returns the S3_ACCESS_KEY. Checks local environment variables first, database-stored settings second
         """
-        return os.environ.get('S3_ACCESS_KEY', self.database_settings.access_key)
+        key = os.environ.get('S3_ACCESS_KEY')
+        return key or self.database_settings.access_key
 
     @property
     def S3_SECRET_KEY(self):
         """
         Returns the S3_SECRET_KEY. Checks local environment variables first, database-stored settings second
         """
-        return os.environ.get('S3_SECRET_KEY', self.database_settings.secret_key)
+        key = os.environ.get('S3_SECRET_KEY')
+        return key or self.database_settings.secret_key
 
     @property
     def database_settings(self):
