@@ -18,6 +18,7 @@ middlewarepatterns = mpatterns('',
     middleware(r'^(?!image)', 'django.contrib.sessions.middleware.SessionMiddleware'),
     middleware(r'^(?!image)', 'django.contrib.auth.middleware.AuthenticationMiddleware'),
     middleware(r'^(?!image)', 'django.contrib.auth.middleware.SessionAuthenticationMiddleware'),
+    middleware(r'^(?!image)', 'django.contrib.messages.middleware.MessageMiddleware'),
 )
 
 # Serving Locally Stored Media Files
