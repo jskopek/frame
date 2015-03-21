@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.core.cache import cache
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse
@@ -94,8 +97,20 @@ class ImageUploaderView(View):
 
     def get(self, request):
         images = ImageModel.objects.filter(variation__isnull=True)
+        
+        # build paginated list of images
+        paginated_images = Paginator(images, 10)
+        page_num = request.GET.get('page')
+        try:
+            page = paginated_images.page(page_num)
+        except PageNotAnInteger:
+            page = paginated_images.page(1)
+        except EmptyPage:
+            page = paginated_images.page(paginator.num_pages)
+
+
         return render(request, 'images/uploader.html', {
-            'images': images
+            'page': page
         })
 
     def post(self, request):
