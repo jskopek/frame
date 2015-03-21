@@ -99,7 +99,7 @@ class ImageUploaderView(View):
         images = ImageModel.objects.filter(variation__isnull=True)
         
         # build paginated list of images
-        paginated_images = Paginator(images, 10)
+        paginated_images = Paginator(images, 20)
         page_num = request.GET.get('page')
         try:
             page = paginated_images.page(page_num)
