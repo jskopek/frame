@@ -3,6 +3,7 @@ from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse
@@ -95,6 +96,7 @@ class ImageUploaderView(View):
     def dispatch(self, *args, **kwargs):
         return super(ImageUploaderView, self).dispatch(*args, **kwargs)
 
+    @method_decorator(login_required)
     def get(self, request):
         images = ImageModel.objects.filter(variation__isnull=True)
         
