@@ -5,7 +5,7 @@
     {% for image in page %}
     <div class="image">
         <img class="image-thumbnail" src="{{ image.get_absolute_url }}?width=180&height=150">
-        <div class="image-link">https://frame-testing.herokuapp.com/images/AH2389757235HJJK/</div>
+        <div class="image-link copy-button" data-clipboard-text="{{ request.build_absolute_uri }}{% url 'image' image.hash %}">{{ request.build_absolute_uri }}{% url 'image' image.hash %}</div>
         <div class="image-date">September 12, 2014 @ 7:32PM</div>
         <a class="image-modify">Modify</a>
     </div>
@@ -35,4 +35,12 @@
     <input type="file" name="attachment">
     <input type="submit" value="Upload!">
 </form>
+
+<!-- zero clipboard -->
+<script src="/static/ZeroClipboard.min.js"></script>
+<script type="text/javascript">
+    // main.js
+    var client = new ZeroClipboard( document.getElementsByClassName("copy-button") );
+</script>
+
 {% endblock %}

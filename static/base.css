@@ -40,8 +40,12 @@ body {
     position: relative;
     margin-bottom: 16px;
 }
+.image-link {
+    cursor: pointer;
+}
 .image-date {
     color: #979797;
+    cursor: default;
 }
 .image-link:before,
 .image-date:before {
