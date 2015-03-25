@@ -1,10 +1,46 @@
-<h2>Uploaded images</h2>
-{% for image in images %}
-<img src="{{ image.get_absolute_url }}?width=100">
-{% endfor %}
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    {% for image in page %}
+    <div class="image">
+        <img class="image-thumbnail" src="{{ image.get_absolute_url }}?width=180&height=150">
+        <div class="image-link copy-button" data-clipboard-text="{{ request.build_absolute_uri }}{% url 'image' image.hash %}">{{ request.build_absolute_uri }}{% url 'image' image.hash %}</div>
+        <div class="image-date">September 12, 2014 @ 7:32PM</div>
+        <a class="image-modify">Modify</a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row">
+    <ul class="pagination pagination-centered">
+        {% if page.has_previous %}
+        <li><a href="?page=1"><<</a></li>
+        <li><a href="?page={{ page.previous_page_number }}"><</a></li>
+        {% endif %}
+
+        {% for i in page.paginator.page_range %}
+        <li {% if page.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+        {% endfor %}
+
+        {% if page.has_next %}
+        <li><a href="?page={{ page.next_page_number }}">></a></li>
+        <li><a href="?page={{ page.paginator.num_pages }}">>></a></li>
+        {% endif %}
+    </ul>
+</div>
 
 <h2>Upload</h2>
 <form method='POST' action='' enctype="multipart/form-data">
     <input type="file" name="attachment">
     <input type="submit" value="Upload!">
 </form>
+
+<!-- zero clipboard -->
+<script src="/static/ZeroClipboard.min.js"></script>
+<script type="text/javascript">
+    // main.js
+    var client = new ZeroClipboard( document.getElementsByClassName("copy-button") );
+</script>
+
+{% endblock %}
