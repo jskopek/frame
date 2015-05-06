@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'django_coverage',
 
     'images',
-    'client',
 )
 
 MIDDLEWARE_CLASSES = (

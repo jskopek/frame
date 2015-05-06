@@ -29,18 +29,18 @@ class SizeModifier(Modifier):
                 desired_height = int(float(self.params['height']))
                 width, height = self.calculate_minimum_height_width(self.image.size[0], self.image.size[1], desired_width, desired_height)
                 offset_x, offset_y = self.calculate_x_y_crop_offsets(width, height, desired_width, desired_height)
-                self.image = self.image.resize((width, height))
+                self.image = self.image.resize((width, height), Image.ANTIALIAS)
                 self.image = self.image.crop((offset_x, offset_y, offset_x + desired_width, offset_y + desired_height))
             elif self.params.get('width'):
                 width = int(float(self.params['width']))
                 height = int(width / image_ratio)
                 # apply new width and height values
-                self.image = self.image.resize((width, height))
+                self.image = self.image.resize((width, height), Image.ANTIALIAS)
             elif self.params.get('height'):
                 height = int(float(self.params['height']))
                 width = int(height * image_ratio)
                 # apply new width and height values
-                self.image = self.image.resize((width, height))
+                self.image = self.image.resize((width, height), Image.ANTIALIAS)
             else:
                 raise Exception('Internal Error. Something really strange happened')
             
