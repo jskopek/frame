@@ -77,6 +77,9 @@ import dj_database_url
 
 if dj_database_url.config():
     DATABASES = {'default': dj_database_url.config()}
+
+    # Pools open database connections to prevent having to open/close a connection on each request
+    DATABASES['default']['CONN_MAX_AGE'] = 600
 else:
     DATABASES = {'default': {
         'ENGINE': 'django.db.backends.sqlite3',
