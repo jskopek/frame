@@ -112,6 +112,7 @@ class ImageUploaderView(View):
 
 
         return render(request, 'images/uploader.html', {
+            'request': request,
             'page': page
         })
 
