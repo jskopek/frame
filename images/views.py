@@ -90,12 +90,7 @@ class ImageView(View):
 
         return image_instance
 
-class ImageUploaderView(View):
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, *args, **kwargs):
-        return super(ImageUploaderView, self).dispatch(*args, **kwargs)
-
+class ImageListView(View):
     @method_decorator(login_required)
     def get(self, request):
         images = ImageModel.objects.filter(variation__isnull=True)
@@ -112,8 +107,14 @@ class ImageUploaderView(View):
 
 
         return render(request, 'images/uploader.html', {
+            'request': request,
             'page': page
         })
+
+class ImageUploaderView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(ImageUploaderView, self).dispatch(*args, **kwargs)
 
     def post(self, request):
         if not request.FILES.get('attachment'):
