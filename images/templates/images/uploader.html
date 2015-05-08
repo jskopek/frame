@@ -32,7 +32,7 @@
 </div>
 
 <h2>Upload</h2>
-<form method='POST' action='' enctype="multipart/form-data">
+<form method="POST" action="{% url 'upload' %}" enctype="multipart/form-data">
     <input type="file" name="attachment">
     <input type="submit" value="Upload!">
 </form>

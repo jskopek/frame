@@ -4,7 +4,6 @@ coverage==3.7.1
 dj-database-url==0.3.0
 dj-static==0.0.6
 django-absolute==0.3
-django-bmemcached==0.2.2
 django-coverage==1.2.4
 django-devserver==0.8.0
 django-toolbelt==0.0.1
@@ -15,7 +14,6 @@ greenlet==0.4.5
 gunicorn==19.1.1
 psycopg2==2.5.4
 pylibmc==1.4.1
-python-binary-memcached==0.24.3
 requests==2.5.1
 static3==0.5.1
 tinys3==0.1.11

@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django_coverage',
     'absolute',
 
+    'db_storage',
     'images',
 )
 
@@ -116,28 +117,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 # Frame-specific settings
 ALLOWED_FORMATS = ('image/jpg', 'image/jpeg', 'image/gif', 'image/png')
 
-FRAME_STORAGE_LIBRARY = 'images.storage.S3Storage'
-#FRAME_STORAGE_LIBRARY = 'images.storage.LocalStorage'
-
-# Caching options
-if os.environ.get('MEMCACHEDCLOUD_SERVERS'):
-    CACHE_BACKEND = 'django_bmemcached.memcached.BMemcached'
-    CACHE_LOCATION = os.environ.get('MEMCACHEDCLOUD_SERVERS').split(',')
-    CACHE_OPTIONS = {'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'), 'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')}
-else:
-    CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
-    CACHE_LOCATION = 'unique-snowflake'
-    CACHE_OPTIONS = {}
-
-
-CACHES = {
-    'default': {
-        'BACKEND': CACHE_BACKEND,
-        'LOCATION': CACHE_LOCATION,
-        'OPTIONS': CACHE_OPTIONS
-    }
-}
-
+# Available options (images.storage.S3Storage, images.storage.LocalStorage, db_storage.storage.DBStorage)
+FRAME_STORAGE_LIBRARY = os.environ.get('FRAME_STORAGE_LIBRARY', 'db_storage.storage.DBStorage')
 
 # Load local settings if file is found
 try:

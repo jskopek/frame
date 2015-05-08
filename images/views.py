@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
@@ -32,19 +31,12 @@ class ImageView(View):
     def get(self, request, image_identifier):
         arguments_slug = STORAGE_LIBRARY.create_argument_slug(request.GET)
 
-        # check cache
-        cache_key = '%s__%s' % (image_identifier, arguments_slug)
+        try:
+            image_instance = ImageModel.objects.get(hash=image_identifier, variation=arguments_slug or None)
+        except ImageModel.DoesNotExist:
+            image_instance = self.get_modified_image(request, image_identifier)
 
-        path = cache.get(cache_key)
-        if not path:
-
-            try:
-                image_instance = ImageModel.objects.get(hash=image_identifier, variation=arguments_slug)
-            except ImageModel.DoesNotExist:
-                image_instance = self.get_modified_image(request, image_identifier)
-
-            path = image_instance.path
-            cache.set(cache_key, path)
+        path = image_instance.path
 
         return redirect(path)
 

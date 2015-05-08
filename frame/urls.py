@@ -8,11 +8,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = patterns('',
     #url(r'^$', csrf_exempt(ImageUploaderView.as_view())),
-    url(r'^$', ImageUploaderView.as_view()),
-    url(r'list/$', ImageListView.as_view()),
+    url(r'^$', ImageUploaderView.as_view(), name='upload'),
+    url(r'list/$', ImageListView.as_view(), name='list'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^image/(?P<image_identifier>[^/]+)/$', ImageView.as_view(), name='image'),
-    url(r'^accounts/', include('django.contrib.auth.urls'))
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^local_image/', include('db_storage.urls')),
 ) 
 
 # apply authentication middleware on everything but the image urls
