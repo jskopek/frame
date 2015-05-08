@@ -39,7 +39,7 @@ class ImageView(View):
         if not path:
 
             try:
-                image_instance = ImageModel.objects.get(hash=image_identifier, variation=arguments_slug)
+                image_instance = ImageModel.objects.get(hash=image_identifier, variation=arguments_slug or None)
             except ImageModel.DoesNotExist:
                 image_instance = self.get_modified_image(request, image_identifier)
 
