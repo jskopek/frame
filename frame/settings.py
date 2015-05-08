@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django_coverage',
     'absolute',
 
+    'db_storage',
     'images',
 )
 
@@ -116,8 +117,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 # Frame-specific settings
 ALLOWED_FORMATS = ('image/jpg', 'image/jpeg', 'image/gif', 'image/png')
 
-FRAME_STORAGE_LIBRARY = 'images.storage.S3Storage'
-#FRAME_STORAGE_LIBRARY = 'images.storage.LocalStorage'
 
 # Caching options
 if os.environ.get('MEMCACHEDCLOUD_SERVERS'):
@@ -138,6 +137,8 @@ CACHES = {
     }
 }
 
+# Available options (images.storage.S3Storage, images.storage.LocalStorage, db_storage.storage.DBStorage)
+FRAME_STORAGE_LIBRARY = os.environ.get('FRAME_STORAGE_LIBRARY', 'db_storage.storage.DBStorage')
 
 # Load local settings if file is found
 try:
