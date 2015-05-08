@@ -4,6 +4,7 @@ from shutil import copyfileobj
 import tinys3
 import os
 import urllib
+import urlparse
 
 class LocalStorage(object):
     def __init__(self, filename):
@@ -56,7 +57,11 @@ class S3Storage(LocalStorage):
         """
         Returns an absolute remote path for the filename from the S3 bucket
         """
-        return 'https://%s.%s/%s' % (self.conn.default_bucket, self.conn.endpoint, self.filename)
+        if settings.AWS_CLOUDFRONT_DOMAIN:
+            cloudfront_parsed = urlparse.urlsplit(settings.AWS_CLOUDFRONT_DOMAIN)
+            return '%s://%s/%s' % (cloudfront_parsed.scheme, cloudfront_parsed.netloc, self.filename)
+        else:
+            return 'https://%s.%s/%s' % (self.conn.default_bucket, self.conn.endpoint, self.filename)
 
     def get_file_data(self):
         """

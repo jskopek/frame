@@ -117,6 +117,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 # Frame-specific settings
 ALLOWED_FORMATS = ('image/jpg', 'image/jpeg', 'image/gif', 'image/png')
 
+# Optional cloudfront domain for CDN distribution (only used with S3Storage library)
+AWS_CLOUDFRONT_DOMAIN = os.environ.get('AWS_CLOUDFRONT_DOMAIN', None)
+
 # Available options (images.storage.S3Storage, images.storage.LocalStorage, db_storage.storage.DBStorage)
 FRAME_STORAGE_LIBRARY = os.environ.get('FRAME_STORAGE_LIBRARY', 'db_storage.storage.DBStorage')
 
