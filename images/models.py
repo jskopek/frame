@@ -14,6 +14,7 @@ class Image(models.Model):
 
     class Meta:
         unique_together = ('hash', 'variation')
+        index_together = ('variation', 'hash')
 
     def get_absolute_url(self):
         from django.core.urlresolvers import reverse
